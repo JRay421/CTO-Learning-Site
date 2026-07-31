@@ -1,1 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Employee Team</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background-color: #FAF7F2;
+      font-family: Montserrat, Arial, sans-serif;
+    }
+
+    body {
+      padding: 30px 20px;
+    }
+
+    /* Main employee grid */
+    .employee-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 22px;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      align-items: stretch;
+    }
+
+    /* Individual employee card */
+    .employee-card {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      min-height: 430px;
+      overflow: hidden;
+      background-color: #FFFFFF;
+      border: 1px solid #D6E4D8;
+      border-radius: 18px;
+      cursor: pointer;
+
+      box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.10),
+        0 2px 6px rgba(0, 0, 0, 0.06);
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .employee-card:hover,
+    .employee-card:focus,
+    .employee-card:focus-within {
+      transform: translateY(-8px);
+
+      box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.16),
+        0 6px 14px rgba(0, 0, 0, 0.10);
+
+      outline: none;
+    }
+
+    /* Employee photo section */
+    .employee-photo-wrapper {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      background-color: #E8ECF4;
+    }
+
+    .employee-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+
+      transition:
+        transform 0.45s ease,
+        filter 0.45s ease;
+    }
+
+    .employee-card:hover .employee-photo,
+    .employee-card:focus .employee-photo,
+    .employee-card.bio-open .employee-photo {
+      transform: scale(1.05);
+      filter: brightness(0.78);
+    }
+
+    /* Name and title section */
+    .employee-info {
+      min-height: 130px;
+      padding: 18px 14px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      background-color: #FFFFFF;
+      text-align: center;
+    }
+
+    .employee-name {
+      margin: 0 0 8px;
+      color: #204594;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .employee-title {
+      margin: 0;
+      color: #555555;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    /* Bio overlay */
+    .employee-bio {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding: 28px 22px 42px;
+
+      background-color: rgba(32, 69, 148, 0.97);
+      color: #FFFFFF;
+      text-align: center;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(24px);
+
+      transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease,
+        transform 0.35s ease;
+    }
+
+    .employee-card:hover .employee-bio,
+    .employee-card:focus .employee-bio,
+    .employee-card:focus-within .employee-bio,
+    .employee-card.bio-open .employee-bio {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .bio-name {
+      margin: 0 0 6px;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .bio-title {
+      margin: 0 0 18px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+    .bio-text {
+      margin: 0;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 5px;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .bio-instruction {
+      position: absolute;
+      right: 15px;
+      bottom: 12px;
+      left: 15px;
+
+      margin: 0;
+
+      font-size: 10px;
+      line-height: 1.4;
+      opacity: 0.72;
+    }
+
+    /* Tablet layout */
+    @media (max-width: 1100px) {
+      .employee-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 950px;
+      }
+    }
+
+    /* Smaller tablet layout */
+    @media (max-width: 760px) {
+      .employee-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 620px;
+      }
+    }
+
+    /* Mobile layout */
+    @media (max-width: 520px) {
+      body {
+        padding: 20px 14px;
+      }
+
+      .employee-grid {
+        grid-template-columns: 1fr;
+        max-width: 370px;
+        gap: 20px;
+      }
+
+      .employee-card {
+        min-height: 440px;
+      }
+
+      .employee-photo-wrapper {
+        height: 310px;
+      }
+
+      .employee-info {
+        min-height: 130px;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .employee-card,
+      .employee-photo,
+      .employee-bio {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="employee-grid">
+
+    <!-- Employee 1 -->
+    <article
+      class="employee-card"
+      tabindex="0"
+      role="button"
+      aria-label="View biography for Employee One"
+    >
+
+      <div class="employee-photo-wrapper">
+        <img
+          class="employee-photo"
+          src="images/employee-1.jpg"
+          alt="Employee One"
+        >
+      </div>
+
+      <div class="employee-info">
+        <h2 class="employee-name">
+          Employee One
+        </h2>
+
+        <p class="employee-title">
+          Employee Title
+        </p>
+      </div>
+
+      <div class="employee-bio">
+        <h2 class="bio-name">
+          Employee One
+        </h2>
+
+        <p class="bio-title">
+          Employee Title
+        </p>
+
+        <p class="bio-text">
+          Add Employee One's biography here. Include information about
+          their professional background, current responsibilities,
+          experience, areas of expertise, and connection to the organization.
+        </p>
+
+        <p class="bio-instruction">
+          Move your mouse away or tap again to close.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Employee 2 -->
+    <article
+      class="employee-card"
+      tabindex="0"
+      role="button"
+      aria-label="View biography for Employee Two"
+    >
+
+      <div class="employee-photo-wrapper">
+        <img
+          class="employee-photo"
+          src="images/employee-2.jpg"
+          alt="Employee Two"
+        >
+      </div>
+
+      <div class="employee-info">
+        <h2 class="employee-name">
+          Employee Two
+        </h2>
+
+        <p class="employee-title">
+          Employee Title
+        </p>
+      </div>
+
+      <div class="employee-bio">
+        <h2 class="bio-name">
+          Employee Two
+        </h2>
+
+        <p class="bio-title">
+          Employee Title
+        </p>
+
+        <p class="bio-text">
+          Add Employee Two's biography here. Each employee can have
+          a different biography while the cards remain the same size
+          and stay evenly spaced.
+        </p>
+
+        <p class="bio-instruction">
+          Move your mouse away or tap again to close.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Employee 3 -->
+    <article
+      class="employee-card"
+      tabindex="0"
+      role="button"
+      aria-label="View biography for Employee Three"
+    >
+
+      <div class="employee-photo-wrapper">
+        <img
+          class="employee-photo"
+          src="images/employee-3.jpg"
+          alt="Employee Three"
+        >
+      </div>
+
+      <div class="employee-info">
+        <h2 class="employee-name">
+          Employee Three
+        </h2>
+
+        <p class="employee-title">
+          Employee Title
+        </p>
+      </div>
+
+      <div class="employee-bio">
+        <h2 class="bio-name">
+          Employee Three
+        </h2>
+
+        <p class="bio-title">
+          Employee Title
+        </p>
+
+        <p class="bio-text">
+          Add Employee Three's biography here. The biography will appear
+          when someone hovers over the card with a mouse or taps the card
+          on a phone or tablet.
+        </p>
+
+        <p class="bio-instruction">
+          Move your mouse away or tap again to close.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Employee 4 -->
+    <article
+      class="employee-card"
+      tabindex="0"
+      role="button"
+      aria-label="View biography for Employee Four"
+    >
+
+      <div class="employee-photo-wrapper">
+        <img
+          class="employee-photo"
+          src="images/employee-4.jpg"
+          alt="Employee Four"
+        >
+      </div>
+
+      <div class="employee-info">
+        <h2 class="employee-name">
+          Employee Four
+        </h2>
+
+        <p class="employee-title">
+          Employee Title
+        </p>
+      </div>
+
+      <div class="employee-bio">
+        <h2 class="bio-name">
+          Employee Four
+        </h2>
+
+        <p class="bio-title">
+          Employee Title
+        </p>
+
+        <p class="bio-text">
+          Add Employee Four's biography here. Keep the biography
+          relatively concise so it remains easy to read inside the
+          employee card.
+        </p>
+
+        <p class="bio-instruction">
+          Move your mouse away or tap again to close.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Employee 5 -->
+    <article
+      class="employee-card"
+      tabindex="0"
+      role="button"
+      aria-label="View biography for Employee Five"
+    >
+
+      <div class="employee-photo-wrapper">
+        <img
+          class="employee-photo"
+          src="images/employee-5.jpg"
+          alt="Employee Five"
+        >
+      </div>
+
+      <div class="employee-info">
+        <h2 class="employee-name">
+          Employee Five
+        </h2>
+
+        <p class="employee-title">
+          Employee Title
+        </p>
+      </div>
+
+      <div class="employee-bio">
+        <h2 class="bio-name">
+          Employee Five
+        </h2>
+
+        <p class="bio-title">
+          Employee Title
+        </p>
+
+        <p class="bio-text">
+          Add Employee Five's biography here. You can include their
+          role, education, professional experience, accomplishments,
+          and any additional information you would like visitors to know.
+        </p>
+
+        <p class="bio-instruction">
+          Move your mouse away or tap again to close.
+        </p>
+      </div>
+
+    </article>
+
+  </main>
+
+
+  <script>
+    const employeeCards = document.querySelectorAll(".employee-card");
+
+    employeeCards.forEach((card) => {
+      card.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const isAlreadyOpen = card.classList.contains("bio-open");
+
+        employeeCards.forEach((otherCard) => {
+          otherCard.classList.remove("bio-open");
+        });
+
+        if (!isAlreadyOpen) {
+          card.classList.add("bio-open");
+        }
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          card.click();
+        }
+
+        if (event.key === "Escape") {
+          card.classList.remove("bio-open");
+          card.blur();
+        }
+      });
+    });
+
+    document.addEventListener("click", () => {
+      employeeCards.forEach((card) => {
+        card.classList.remove("bio-open");
+      });
+    });
+  </script>
+
+</body>
+</html>
