@@ -1,318 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<title>Team</title>
 
-  <title>Our Team</title>
+<style>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+*{
+    box-sizing:border-box;
+}
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      background-color: #FFFFFF;
-      font-family: Montserrat, Arial, sans-serif;
-    }
+body{
+    margin:0;
+    padding:20px;
+    background:#fff;
+    font-family:Montserrat,Arial,sans-serif;
+}
 
-    body {
-      padding: 30px 20px;
-    }
+/* Container */
 
-    /* Six-column grid allows the bottom two cards to be centered */
-    .employee-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 24px;
+.employee-grid{
 
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
 
-    /* Each card takes up two of the six columns */
-    .employee-card {
-      grid-column: span 2;
+    max-width:900px;
+    margin:auto;
 
-      width: 100%;
-      min-width: 0;
-      overflow: hidden;
+}
 
-      background-color: #FFFFFF;
-      border: 1px solid #D6E4D8;
-      border-radius: 18px;
+/* Cards */
 
-      box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.10),
-        0 2px 6px rgba(0, 0, 0, 0.06);
+.employee-card{
 
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    }
+    width:240px;
 
-    .employee-card:hover {
-      transform: translateY(-8px);
+    background:#fff;
 
-      box-shadow:
-        0 16px 34px rgba(0, 0, 0, 0.16),
-        0 6px 14px rgba(0, 0, 0, 0.10);
-    }
+    border:1px solid #D6E4D8;
 
-    /*
-      Center the two cards on the second row.
+    border-radius:16px;
 
-      Card 4 begins in column 2.
-      Card 5 begins in column 4.
-    */
-    .employee-card:nth-child(4) {
-      grid-column: 2 / span 2;
-    }
+    overflow:hidden;
 
-    .employee-card:nth-child(5) {
-      grid-column: 4 / span 2;
-    }
+    box-shadow:
+    0 5px 15px rgba(0,0,0,.08);
 
-    /* Photo window */
-    .employee-photo-wrapper {
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-      background-color: #E8ECF4;
-    }
+    transition:.3s;
 
-    .employee-photo {
-      display: block;
-      width: 100%;
-      height: 100%;
+}
 
-      object-fit: cover;
-      object-position: center top;
+.employee-card:hover{
 
-      transition: transform 0.45s ease;
-    }
+    transform:translateY(-6px);
 
-    .employee-card:hover .employee-photo {
-      transform: scale(1.04);
-    }
+    box-shadow:
+    0 14px 28px rgba(0,0,0,.15);
 
-    /* Name and title */
-    .employee-info {
-      min-height: 105px;
-      padding: 16px 12px;
+}
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+/* Window image */
 
-      text-align: center;
-    }
+.employee-photo-wrapper{
 
-    .employee-name {
-      margin: 0 0 8px;
+    height:220px;
 
-      color: #204594;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
+    overflow:hidden;
 
-    .employee-title {
-      margin: 0;
+    background:#E8ECF4;
 
-      color: #555555;
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 1.4;
-    }
+}
 
-    /* Tablet: two cards per row */
-    @media (max-width: 850px) {
-      .employee-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 700px;
-      }
+.employee-photo{
 
-      .employee-card,
-      .employee-card:nth-child(4),
-      .employee-card:nth-child(5) {
-        grid-column: auto;
-      }
+    width:100%;
 
-      /*
-        Centers the fifth card when it appears alone
-        on the final tablet row.
-      */
-      .employee-card:nth-child(5) {
-        grid-column: 1 / -1;
-        width: calc(50% - 12px);
-        justify-self: center;
-      }
-    }
+    height:100%;
 
-    /* Mobile: one card per row */
-    @media (max-width: 520px) {
-      body {
-        padding: 20px 14px;
-      }
+    object-fit:cover;
 
-      .employee-grid {
-        grid-template-columns: 1fr;
-        max-width: 370px;
-        gap: 20px;
-      }
+    object-position:center top;
 
-      .employee-card,
-      .employee-card:nth-child(4),
-      .employee-card:nth-child(5) {
-        grid-column: auto;
-        width: 100%;
-      }
-    }
+    transition:.4s;
 
-    @media (prefers-reduced-motion: reduce) {
-      .employee-card,
-      .employee-photo {
-        transition: none;
-      }
-    }
-  </style>
+}
+
+.employee-card:hover .employee-photo{
+
+    transform:scale(1.05);
+
+}
+
+/* Text */
+
+.employee-info{
+
+    padding:14px 12px 18px;
+
+    text-align:center;
+
+}
+
+.employee-name{
+
+    margin:0 0 6px;
+
+    color:#204594;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.employee-title{
+
+    margin:0;
+
+    color:#666;
+
+    font-size:12px;
+
+    line-height:1.4;
+
+}
+
+/* Tablet */
+
+@media(max-width:800px){
+
+.employee-card{
+
+    width:220px;
+
+}
+
+}
+
+/* Phone */
+
+@media(max-width:600px){
+
+.employee-card{
+
+    width:100%;
+
+    max-width:320px;
+
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <main class="employee-grid">
+<div class="employee-grid">
 
-    <!-- Employee 1 -->
-    <article class="employee-card">
+<div class="employee-card">
 
-      <div class="employee-photo-wrapper">
-        <img
-          class="employee-photo"
-          src="images/Jeannie.jpg"
-          alt="Dr. Jeannie Stone"
-        >
-      </div>
+<div class="employee-photo-wrapper">
+<img class="employee-photo"
+src="images/Jeannie.jpg"
+alt="Jeannie Stone">
+</div>
 
-      <div class="employee-info">
-        <h2 class="employee-name">
-          Jeannie Stone
-        </h2>
+<div class="employee-info">
+<h2 class="employee-name">Jeannie Stone</h2>
+<p class="employee-title">Superintendent in Residence</p>
+</div>
 
-        <p class="employee-title">
-          Superintendent in Residence
-        </p>
-      </div>
-
-    </article>
+</div>
 
 
-    <!-- Employee 2 -->
-    <article class="employee-card">
+<div class="employee-card">
 
-      <div class="employee-photo-wrapper">
-        <img
-          class="employee-photo"
-          src="images/Chelsea.jpg"
-          alt="Chelsea Valdez"
-        >
-      </div>
+<div class="employee-photo-wrapper">
+<img class="employee-photo"
+src="images/Chelsea.jpg"
+alt="Chelsea Valdez">
+</div>
 
-      <div class="employee-info">
-        <h2 class="employee-name">
-          Chelsea Valdez
-        </h2>
+<div class="employee-info">
+<h2 class="employee-name">Chelsea Valdez</h2>
+<p class="employee-title">Managing Director, Educator Development</p>
+</div>
 
-        <p class="employee-title">
-          Managing Director, Educator Development
-        </p>
-      </div>
-
-    </article>
+</div>
 
 
-    <!-- Employee 3 -->
-    <article class="employee-card">
+<div class="employee-card">
 
-      <div class="employee-photo-wrapper">
-        <img
-          class="employee-photo"
-          src="images/Laura.jpg"
-          alt="Laura Vargas"
-        >
-      </div>
+<div class="employee-photo-wrapper">
+<img class="employee-photo"
+src="images/Laura.jpg"
+alt="Laura Vargas">
+</div>
 
-      <div class="employee-info">
-        <h2 class="employee-name">
-          Laura Vargas
-        </h2>
+<div class="employee-info">
+<h2 class="employee-name">Laura Vargas</h2>
+<p class="employee-title">Director, Special Assistant to the Chiefs</p>
+</div>
 
-        <p class="employee-title">
-          Director, Special Assistant to the Chiefs
-        </p>
-      </div>
-
-    </article>
+</div>
 
 
-    <!-- Employee 4 -->
-    <article class="employee-card">
+<div class="employee-card">
 
-      <div class="employee-photo-wrapper">
-        <img
-          class="employee-photo"
-          src="images/Jasmine.jpg"
-          alt="Jasmine Ray"
-        >
-      </div>
+<div class="employee-photo-wrapper">
+<img class="employee-photo"
+src="images/Jasmine.jpg"
+alt="Jasmine Ray">
+</div>
 
-      <div class="employee-info">
-        <h2 class="employee-name">
-          Jasmine Ray
-        </h2>
+<div class="employee-info">
+<h2 class="employee-name">Jasmine Ray</h2>
+<p class="employee-title">Statewide Engagement &amp; Activation Associate</p>
+</div>
 
-        <p class="employee-title">
-          Statewide Engagement &amp; Activation Associate
-        </p>
-      </div>
-
-    </article>
+</div>
 
 
-    <!-- Employee 5 -->
-    <article class="employee-card">
+<div class="employee-card">
 
-      <div class="employee-photo-wrapper">
-        <img
-          class="employee-photo"
-          src="images/Izzy.jpg"
-          alt="Isabelle Nogoy"
-        >
-      </div>
+<div class="employee-photo-wrapper">
+<img class="employee-photo"
+src="images/Izzy.jpg"
+alt="Isabelle Nogoy">
+</div>
 
-      <div class="employee-info">
-        <h2 class="employee-name">
-          Isabelle Nogoy
-        </h2>
+<div class="employee-info">
+<h2 class="employee-name">Isabelle Nogoy</h2>
+<p class="employee-title">Associate, Educator Development</p>
+</div>
 
-        <p class="employee-title">
-          Associate, Educator Development
-        </p>
-      </div>
+</div>
 
-    </article>
-
-  </main>
+</div>
 
 </body>
 </html>
