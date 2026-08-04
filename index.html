@@ -8,7 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title> </title>
+  <title>Our Team</title>
 
   <style>
     * {
@@ -28,28 +28,28 @@
       padding: 30px 20px;
     }
 
-    /* Main employee grid */
+    /* Six-column grid allows the bottom two cards to be centered */
     .employee-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 24px;
+
       width: 100%;
-      max-width: 1600px;
+      max-width: 1200px;
       margin: 0 auto;
-      align-items: stretch;
     }
 
-    /* Individual employee card */
+    /* Each card takes up two of the six columns */
     .employee-card {
-      position: relative;
+      grid-column: span 2;
+
       width: 100%;
       min-width: 0;
-      min-height: 430px;
       overflow: hidden;
+
       background-color: #FFFFFF;
       border: 1px solid #D6E4D8;
       border-radius: 18px;
-      cursor: pointer;
 
       box-shadow:
         0 6px 18px rgba(0, 0, 0, 0.10),
@@ -60,22 +60,32 @@
         box-shadow 0.3s ease;
     }
 
-    .employee-card:hover,
-    .employee-card:focus,
-    .employee-card:focus-within {
+    .employee-card:hover {
       transform: translateY(-8px);
 
       box-shadow:
         0 16px 34px rgba(0, 0, 0, 0.16),
         0 6px 14px rgba(0, 0, 0, 0.10);
-
-      outline: none;
     }
 
-    /* Employee photo section */
+    /*
+      Center the two cards on the second row.
+
+      Card 4 begins in column 2.
+      Card 5 begins in column 4.
+    */
+    .employee-card:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .employee-card:nth-child(5) {
+      grid-column: 4 / span 2;
+    }
+
+    /* Photo window */
     .employee-photo-wrapper {
       width: 100%;
-      height: 300px;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       background-color: #E8ECF4;
     }
@@ -84,139 +94,73 @@
       display: block;
       width: 100%;
       height: 100%;
+
       object-fit: cover;
       object-position: center top;
 
-      transition:
-        transform 0.45s ease,
-        filter 0.45s ease;
+      transition: transform 0.45s ease;
     }
 
-    .employee-card:hover .employee-photo,
-    .employee-card:focus .employee-photo,
-    .employee-card.bio-open .employee-photo {
-      transform: scale(1.05);
-      filter: brightness(0.78);
+    .employee-card:hover .employee-photo {
+      transform: scale(1.04);
     }
 
-    /* Name and title section */
+    /* Name and title */
     .employee-info {
-      min-height: 130px;
-      padding: 12px 8px;
+      min-height: 105px;
+      padding: 16px 12px;
 
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
 
-      background-color: #FFFFFF;
       text-align: center;
     }
 
     .employee-name {
       margin: 0 0 8px;
+
       color: #204594;
       font-size: 20px;
       font-weight: 700;
-      line-height: 1;
+      line-height: 1.2;
     }
 
     .employee-title {
       margin: 0;
+
       color: #555555;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
-      line-height: 1;
-    }
-
-    /* Bio overlay */
-    .employee-bio {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      padding: 28px 22px 42px;
-
-      background-color: rgba(32, 69, 148, 0.97);
-      color: #FFFFFF;
-      text-align: center;
-
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(24px);
-
-      transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease,
-        transform 0.35s ease;
-    }
-
-    .employee-card:hover .employee-bio,
-    .employee-card:focus .employee-bio,
-    .employee-card:focus-within .employee-bio,
-    .employee-card.bio-open .employee-bio {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .bio-name {
-      margin: 0 0 6px;
-      font-size: 21px;
-      font-weight: 700;
-      line-height: 1.25;
-    }
-
-    .bio-title {
-      margin: 0 0 18px;
-      font-size: 13px;
-      font-weight: 600;
       line-height: 1.4;
-      opacity: 0.9;
     }
 
-    .bio-text {
-      margin: 0;
-      max-height: 260px;
-      overflow-y: auto;
-      padding-right: 5px;
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .bio-instruction {
-      position: absolute;
-      right: 15px;
-      bottom: 12px;
-      left: 15px;
-
-      margin: 0;
-
-      font-size: 10px;
-      line-height: 1.4;
-      opacity: 0.72;
-    }
-
-    /* Tablet layout */
-    @media (max-width: 1100px) {
-      .employee-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        max-width: 950px;
-      }
-    }
-
-    /* Smaller tablet layout */
-    @media (max-width: 760px) {
+    /* Tablet: two cards per row */
+    @media (max-width: 850px) {
       .employee-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 620px;
+        max-width: 700px;
+      }
+
+      .employee-card,
+      .employee-card:nth-child(4),
+      .employee-card:nth-child(5) {
+        grid-column: auto;
+      }
+
+      /*
+        Centers the fifth card when it appears alone
+        on the final tablet row.
+      */
+      .employee-card:nth-child(5) {
+        grid-column: 1 / -1;
+        width: calc(50% - 12px);
+        justify-self: center;
       }
     }
 
-    /* Mobile layout */
+    /* Mobile: one card per row */
     @media (max-width: 520px) {
       body {
         padding: 20px 14px;
@@ -228,24 +172,17 @@
         gap: 20px;
       }
 
-      .employee-card {
-        min-height: 440px;
-      }
-
-      .employee-photo-wrapper {
-        height: 310px;
-      }
-
-      .employee-info {
-        min-height: 130px;
+      .employee-card,
+      .employee-card:nth-child(4),
+      .employee-card:nth-child(5) {
+        grid-column: auto;
+        width: 100%;
       }
     }
 
-    /* Accessibility */
     @media (prefers-reduced-motion: reduce) {
       .employee-card,
-      .employee-photo,
-      .employee-bio {
+      .employee-photo {
         transition: none;
       }
     }
@@ -257,12 +194,7 @@
   <main class="employee-grid">
 
     <!-- Employee 1 -->
-    <article
-      class="employee-card"
-      tabindex="0"
-      role="button"
-      aria-label="View biography for Employee One"
-    >
+    <article class="employee-card">
 
       <div class="employee-photo-wrapper">
         <img
@@ -282,37 +214,11 @@
         </p>
       </div>
 
-      <div class="employee-bio">
-        <h2 class="bio-name">
-          Jeannie Stone
-        </h2>
-
-        <p class="bio-title">
-          Superintendent in Residence
-        </p>
-
-        <p class="bio-text">
-          Jeannie Stone has dedicated her life to public schools for over thirty years. A native North Texan, Jeannie began her career teaching middle school English in Dallas ISD. With a focus on equity and excellence in education for ALL students, she has served in a variety of diverse districts from small to large urban settings including Wylie, Mesquite, and Richardson ISD.
-A graduate of Mesquite ISD schools, Jeannie later returned to the district to serve in the roles of teacher, assistant principal, principal, and Administrative Officer to the Superintendent. During her time serving in Mesquite, she was named a UT Distinguished Educator, was named to the Apple Corps of Teachers, was selected by her peers as Secondary Principal of the Year and was chosen by the Meadows Foundation as North Texas Volunteer of the Year for her commitment to community service. During her first year as principal at Dr. Ralph H. Poteet High School, the campus was chosen as a National Blue Ribbon School of Excellence and a George W. Bush National Point of Light.
-Dr. Stone joined Richardson ISD in 2014 and served as Deputy Superintendent of Curriculum and Instruction for one year, before being named Superintendent. During her tenure, the district passed a comprehensive racial equity policy, and Dr. Stone was widely recognized for her dedication to closing achieving gaps. She spearheaded the Accelerating Campus Excellence (ACE) model at four Richardson campuses to turnaround performance and provide support for students most in need. She led the district in passing two bond proposals (2016 and 2021) and one tax ratification (2019), all totaling over $1 billion dollars. For her leadership efforts, she was named the 2019 Texas Superintendent of the Year by Texas PTA, Altrusa International’s 2018 Outstanding Woman in Education, and the 2017 Texas ESSA Superintendent of the Year. The Dallas Business Journal named her one of their ten inaugural Leaders in Diversity recipients on March 4, 2021.
-Dr. Stone earned a B.A. in English from UT Arlington, an M.A. in Education from Texas A&M Commerce, and a Doctorate in Educational Leadership and Policy from Nova Southeastern University.
-        </p>
-
-        <p class="bio-instruction">
-          Move your mouse away or tap again to close.
-        </p>
-      </div>
-
     </article>
 
 
     <!-- Employee 2 -->
-    <article
-      class="employee-card"
-      tabindex="0"
-      role="button"
-      aria-label="View biography for Employee Two"
-    >
+    <article class="employee-card">
 
       <div class="employee-photo-wrapper">
         <img
@@ -332,37 +238,11 @@ Dr. Stone earned a B.A. in English from UT Arlington, an M.A. in Education from 
         </p>
       </div>
 
-      <div class="employee-bio">
-        <h2 class="bio-name">
-          Chelsea Valdez
-        </h2>
-
-        <p class="bio-title">
-          Managing Director, Educator Development
-        </p>
-
-        <p class="bio-text">
-          Chelsea Valdez was born into a family deeply committed to education, with her mother and grandparents on both sides dedicating themselves to roles spanning Pk-12 teaching, counseling, school leadership, and rural superintendent positions. Raised in southeastern Missouri, she moved to the Dallas-Fort Worth area in 2009 to serve as a Teach For America corps member, where she taught middle school mathematics in Dallas ISD.
-While teaching, Chelsea quickly realized the pivotal role that educators play in shaping students' long-term academic success and social-emotional development. After transitioning from the classroom, Chelsea spent the next decade working in educator preparation, coaching and mentoring hundreds of novice teachers across the country. Nine of those years were with Relay Graduate School of Education, serving initially as a faculty member at their New York campus and later assuming the role of Director of Certification & Department Chair on their national team. Her responsibilities extended to supporting teachers enrolled in Relay's educator preparation programs across 18 states. Additionally, she played integral roles as an instructional coach and Director of Curriculum and Program at The Educator Academy in Kansas City, MO. In this capacity, she contributed to the establishment of their teacher residency's curriculum, coaching protocols, and mentor teacher development during its inaugural year of operations.
-Chelsea holds a master's degree in education policy from Teachers College, Columbia University, and a bachelor's degree in business administration from the University of Missouri. She has also actively participated in education-focused fellowships, including an Education Pioneers Summer Fellowship in New York City and a Summer Policy Internship at the Institute for School Partnership at Washington University in St. Louis, MO.
-Residing in Dallas County with her husband and two children, Chelsea remains dedicated to fostering educational excellence and innovation through her commitment to educator development and student success.
-        </p>
-
-        <p class="bio-instruction">
-          Move your mouse away or tap again to close.
-        </p>
-      </div>
-
     </article>
 
 
     <!-- Employee 3 -->
-    <article
-      class="employee-card"
-      tabindex="0"
-      role="button"
-      aria-label="View biography for Employee Three"
-    >
+    <article class="employee-card">
 
       <div class="employee-photo-wrapper">
         <img
@@ -382,36 +262,11 @@ Residing in Dallas County with her husband and two children, Chelsea remains ded
         </p>
       </div>
 
-      <div class="employee-bio">
-        <h2 class="bio-name">
-          Laura Vargas
-        </h2>
-
-        <p class="bio-title">
-          Director, Special Assistant to the Chiefs
-        </p>
-
-        <p class="bio-text">
-          Laura Vargas was born in Colombia but has spent most of her life in Texas, and is a proud graduate of Garland ISD. As the daughter of two bilingual teachers, she has always had a deep appreciation for the importance education can play in shaping lives. Throughout her life, Laura has sought out opportunities to be involved in education, such as working at a math learning center in high school and interning at an education nonprofit focused on creating leadership pathways for Latinos in education. In her role at Commit, she hopes to use data and strategic thinking to help tackle issues in our communities and public schools, and help achieve more equitable outcomes for all students.
-Before joining Commit, Laura was working for a management consulting firm in Houston, working across industries to analyze data and solve business issues. While in consulting, Laura was able to work on projects for public sector and nonprofit clients, which helped fuel her interest in social impact and education.
-Laura attended Rice University, where she earned a Bachelor of Arts in Economics. In her free time, Laura enjoys playing sand volleyball, reading, and trying new coffee spots.
-        </p>
-
-        <p class="bio-instruction">
-          Move your mouse away or tap again to close.
-        </p>
-      </div>
-
     </article>
 
 
     <!-- Employee 4 -->
-    <article
-      class="employee-card"
-      tabindex="0"
-      role="button"
-      aria-label="View biography for Employee Four"
-    >
+    <article class="employee-card">
 
       <div class="employee-photo-wrapper">
         <img
@@ -427,27 +282,7 @@ Laura attended Rice University, where she earned a Bachelor of Arts in Economics
         </h2>
 
         <p class="employee-title">
-          Statewide, Engagement & Activation Associate
-        </p>
-      </div>
-
-      <div class="employee-bio">
-        <h2 class="bio-name">
-          Jasmine Ray
-        </h2>
-
-        <p class="bio-title">
-          Statewide, Engagement & Activation Associate
-        </p>
-
-        <p class="bio-text">
-          Jasmine Ray was born in Albany, Georgia but raised all over the world as the child of two military parents.
-Prior to joining the Commit Partnership, her commitment to educational equity led her to City Year Dallas, where she served for two years working with students in Dallas ISD and Uplift Education. Throughout her tenure, she mentored and tutored students in high-need schools, aiming to improve their academic success and graduation rates. This experience inspired her to continue seeking ways to make a broader impact and drive systemic change. Joining Commit has aligned with her mission that education should be accessible for all students, regardless of their background.
-In her free time, she enjoys reading a good mystery book (preferably by J.D. Robb), hiking, watching Grey's Anatomy, and spending time with her mom and her sweet puppy, Lego.
-        </p>
-
-        <p class="bio-instruction">
-          Move your mouse away or tap again to close.
+          Statewide Engagement &amp; Activation Associate
         </p>
       </div>
 
@@ -455,12 +290,7 @@ In her free time, she enjoys reading a good mystery book (preferably by J.D. Rob
 
 
     <!-- Employee 5 -->
-    <article
-      class="employee-card"
-      tabindex="0"
-      role="button"
-      aria-label="View biography for Employee Five"
-    >
+    <article class="employee-card">
 
       <div class="employee-photo-wrapper">
         <img
@@ -480,69 +310,9 @@ In her free time, she enjoys reading a good mystery book (preferably by J.D. Rob
         </p>
       </div>
 
-      <div class="employee-bio">
-        <h2 class="bio-name">
-          Isabelle Nogoy
-        </h2>
-
-        <p class="bio-title">
-          Associate, Educator Development
-        </p>
-
-        <p class="bio-text">
-          Born in Japan and raised in Washington State, Isabelle is a first-generation college student whose passion for education was shaped by the dedicated teachers and supportive learning environments she experienced growing up. That early access to quality education and the challenges of navigating college without a familial blueprint inspired her commitment to ensuring all students have the opportunity to thrive.
-Following her passion for quality education, Isabelle received a BA in education at the University of Washington. She then joined Teach for America and moved to Dallas to teach high school math. She later earned her master's degree in education from Southern Methodist University. Over four years in the classroom, she became especially passionate about working with English language learners and students in deaf education, finding joy in building relationships and adapting instruction to meet diverse learning needs.
-Isabelle brings that same heart for people to her work at Commit, where she’s motivated by the belief that systemic change is only possible when every student feels seen, valued, and supported. She is deeply committed to cultivating belonging, uplifting cultural diversity, and learning from others’ lived experiences to inform more equitable and inclusive educational systems.
-Outside of work, Isabelle recharges through activities that let her creativity flow: crocheting, crafting, and reading. She also enjoys quiet moments with her dog, Honey. Isabelle is deeply close to her family and looks up to the kindness, integrity, and resilience they model in both their personal lives and professions.
-        </p>
-
-        <p class="bio-instruction">
-          Move your mouse away or tap again to close.
-        </p>
-      </div>
-
     </article>
 
   </main>
-
-
-  <script>
-    const employeeCards = document.querySelectorAll(".employee-card");
-
-    employeeCards.forEach((card) => {
-      card.addEventListener("click", (event) => {
-        event.stopPropagation();
-
-        const isAlreadyOpen = card.classList.contains("bio-open");
-
-        employeeCards.forEach((otherCard) => {
-          otherCard.classList.remove("bio-open");
-        });
-
-        if (!isAlreadyOpen) {
-          card.classList.add("bio-open");
-        }
-      });
-
-      card.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          card.click();
-        }
-
-        if (event.key === "Escape") {
-          card.classList.remove("bio-open");
-          card.blur();
-        }
-      });
-    });
-
-    document.addEventListener("click", () => {
-      employeeCards.forEach((card) => {
-        card.classList.remove("bio-open");
-      });
-    });
-  </script>
 
 </body>
 </html>
