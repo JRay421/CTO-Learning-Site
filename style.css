@@ -44,17 +44,25 @@ body {
 
 .logo-carousel::before {
   left: 0;
-  background: linear-gradient(to right, #0d6cb9, rgba(13, 108, 185, 0));
+  background: linear-gradient(
+    to right,
+    #0d6cb9,
+    rgba(13, 108, 185, 0)
+  );
 }
 
 .logo-carousel::after {
   right: 0;
-  background: linear-gradient(to left, #0d6cb9, rgba(13, 108, 185, 0));
+  background: linear-gradient(
+    to left,
+    #0d6cb9,
+    rgba(13, 108, 185, 0)
+  );
 }
 
 .logo-track {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   width: max-content;
   animation: logo-scroll 50s linear infinite;
   will-change: transform;
@@ -73,7 +81,7 @@ body {
 
   flex: 0 0 200px;
   width: 200px;
-  height: 250px;
+  height: 255px;
 
   margin: 8px 14px;
   padding: 14px;
@@ -83,6 +91,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.09);
 
+  color: inherit;
   text-decoration: none;
   overflow: hidden;
 
@@ -94,7 +103,7 @@ body {
 .logo-item:hover,
 .logo-item:focus-visible {
   transform: translateY(-4px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
   outline: none;
 }
 
@@ -107,7 +116,7 @@ body {
   object-position: center;
 
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   margin-bottom: 12px;
 
@@ -123,7 +132,6 @@ body {
   width: 100%;
   margin: 0;
 
-  font-family: Montserrat, sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.25;
@@ -136,18 +144,22 @@ body {
   width: 100%;
   margin-top: 5px;
 
-  font-family: Montserrat, sans-serif;
   font-size: 12px;
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.35;
 
   color: #666666;
   text-align: center;
 }
 
 @keyframes logo-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 768px) {
@@ -165,15 +177,25 @@ body {
   }
 
   .logo-item {
-    width: 170px;
-    height: 105px;
+    flex: 0 0 175px;
+    width: 175px;
+    height: 225px;
     margin: 6px 10px;
-    padding: 16px;
+    padding: 12px;
   }
 
   .logo-item img {
-    max-width: 135px;
-    max-height: 68px;
+    width: 145px;
+    height: 135px;
+    margin-bottom: 10px;
+  }
+
+  .employee-name {
+    font-size: 15px;
+  }
+
+  .employee-title {
+    font-size: 11px;
   }
 
   .logo-track {
@@ -192,16 +214,27 @@ body {
   }
 
   .logo-item {
-    width: 145px;
-    height: 92px;
+    flex: 0 0 155px;
+    width: 155px;
+    height: 205px;
     margin: 5px 8px;
-    padding: 12px;
+    padding: 10px;
     border-radius: 12px;
   }
 
   .logo-item img {
-    max-width: 118px;
-    max-height: 58px;
+    width: 130px;
+    height: 120px;
+    margin-bottom: 9px;
+    border-radius: 10px;
+  }
+
+  .employee-name {
+    font-size: 14px;
+  }
+
+  .employee-title {
+    font-size: 10px;
   }
 
   .logo-track {
