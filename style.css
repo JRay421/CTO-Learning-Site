@@ -6,14 +6,14 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #ACB6C8;
+  background: #ffffff;
   font-family: Montserrat, sans-serif;
 }
 
 .partner-section {
   width: 100%;
   padding: 28px 0 32px;
-  background: #ACB6C8;
+  background: #ffffff;
   overflow: hidden;
 }
 
@@ -22,7 +22,7 @@ body {
   text-align: center;
   font-size: clamp(24px, 4vw, 36px);
   line-height: 1.2;
-  color: #ffffff;
+  color: #667591;
 }
 
 .logo-carousel {
@@ -149,7 +149,7 @@ body {
   font-weight: 500;
   line-height: 1.35;
 
-  color: #ffffff;
+  color: #667591;
   text-align: center;
 }
 
